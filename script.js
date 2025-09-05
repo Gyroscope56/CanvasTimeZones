@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
     }
     const timezoneMap = {
-        'wisc.edu': 'America/Los_Angeles',          // Wisconsin
+        'wisc.edu': 'America/Chicago',          // Wisconsin
         'harvard.edu': 'America/New_York',      // Harvard  
         'stanford.edu': 'America/Los_Angeles',  // Stanford
         'mit.edu': 'America/New_York',          // MIT
@@ -85,12 +85,13 @@ function alterTimeStamp(timeStamp, timeZone, dayInfo) {
     );
     let node;
     let time;
+    let timeNode;
     while (node = timeStampWalker.nextNode()) {
         const text = node.textContent;
         if (text.split(" ").length <= 4) {
-            console.log(node);
             // Found something important!
             if (text.includes(":")) {
+                timeNode = node;
                 // There are text boxes that have "All Day" or "Pts", so we can't parse those for time
                 if (text.split(" ").length == 3) {
                     // If this is the case, the format is "DUE: XX:XX PM"
@@ -102,7 +103,6 @@ function alterTimeStamp(timeStamp, timeZone, dayInfo) {
             }
         }
     }
-    console.log(time);
     // All the calculations go here
     // Construct the date for the following format: YYYY/MM/DD Hour:Minute:Second +0000"
     const dayParts = dayInfo.textContent.replaceAll(",", "").split(" ");
@@ -138,7 +138,10 @@ function alterTimeStamp(timeStamp, timeZone, dayInfo) {
     try {
         date = createDateFromComponents(year, month, day, time, timeZone);
         const tempDate = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: timeZone }));
-        console.log(tempDate);
+        //console.log(tempDate);
+        let tempText = tempDate.toUTCString().substring(5, tempDate.toUTCString().length - 7);
+        console.log(timeNode);
+        timeNode.innerHTML = `<span aria-hidden="true">Localized Time: ${tempText}</span>`;
     } catch (err) { }
     //date = `${new Date().getFullYear()}/${month}/${day} ${timeStamp}:00 +0000`;
     // Now we find day and month

@@ -14,7 +14,7 @@ chrome.action.onClicked.addListener(async () => {
     }
     chrome.tabs.query({
         url: ["*://*.instructure.com/*",
-            "*://*/canvas/*",
+            "*://*/canvas.*/*",
             "*://canvas.wisc.edu/*"]
     }).then(sendMessageToTabs)
 

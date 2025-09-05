@@ -8,8 +8,7 @@
     },
     "host_permissions": [
         "*://*.instructure.com/*",
-        "*://*/canvas/*",
-        "*://*/canvas./*"
+        "*://*/canvas.*/*"
     ],
     "content_scripts": [
         {
@@ -18,7 +17,7 @@
             ],
             "matches": [
                 "*://*.instructure.com/*",
-                "*://*/canvas./*",
+                "*://*/canvas.*/*",
                 "*://canvas.wisc.edu/*"
             ]
         }
@@ -29,7 +28,7 @@
         ],
         "matches": [
             "*://*.instructure.com/*",
-            "*://*/canvas./*",
+            "*://*/canvas.*/*",
             "*://canvas.wisc.edu/*"
         ],
         "accepts_tls_channel_id": false
