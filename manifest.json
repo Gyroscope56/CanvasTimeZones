@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "Canvas Time Zones",
+    "version": "1.0.0",
+    "description": "This extension shows the local time that assignments/quizzes are due on Canvas, so students can submit them on time.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "*://*.instructure.com/*",
+        "*://*/canvas/*",
+        "*://*/canvas./*"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "script.js"
+            ],
+            "matches": [
+                "*://*.instructure.com/*",
+                "*://*/canvas./*",
+                "*://canvas.wisc.edu/*"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "ids": [
+            "*"
+        ],
+        "matches": [
+            "*://*.instructure.com/*",
+            "*://*/canvas./*",
+            "*://canvas.wisc.edu/*"
+        ],
+        "accepts_tls_channel_id": false
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/checkmark.png",
+            "24": "icons/checkmark.png",
+            "32": "icons/checkmark.png"
+        }
+    }
+}
